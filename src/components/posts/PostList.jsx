@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Table } from "reactstrap";
+import { Link } from "react-router-dom";
 import { getAllPosts } from "../../managers/postManager";
 
 export default function PostList() {
@@ -24,7 +25,9 @@ export default function PostList() {
         <tbody>
           {posts.map((post) => (
             <tr key={post.id}>
-              <td>{post.title}</td>
+              <td>
+                <Link to={`/posts/${post.id}`}>{post.title}</Link>
+              </td>
               <td>{post.category}</td>
             </tr>
           ))}
