@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getPostById } from "../../managers/postManager";
+import { getPostById, deletePost } from "../../managers/postManager";
 
-export default function PostDetails() {
+export default function PostDetails({ loggedInUser }) {
   const { id } = useParams();
   const [post, setPost] = useState();
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ export default function PostDetails() {
       deletePost(id).then(() => navigate("/posts"));
     }
   };
-  
+
   return (
     <div className="container">
       <h2>{post.title}</h2>
