@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import { getPostById } from "../../managers/postManager";
+import { useParams, useNavigate } from "react-router-dom";
+import { getPostById, deletePost } from "../../managers/postManager";
 
-export default function PostDetails() {
+export default function PostDetails({ loggedInUser }) {
   const { id } = useParams();
   const [post, setPost] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     getPostById(id).then((postFromApi) => {
@@ -20,6 +21,14 @@ export default function PostDetails() {
     "en-US",
   );
 
+  const isAuthor = post.authorUserName === loggedInUser.userName;
+
+  const handleDelete = () => {
+    if (window.confirm("Are you sure you want to delete this post?")) {
+      deletePost(id).then(() => navigate("/posts"));
+    }
+  };
+
   return (
     <div className="container">
       <h2>{post.title}</h2>
@@ -33,6 +42,7 @@ export default function PostDetails() {
       <p>{post.content}</p>
       <p>Published: {formattedDate}</p>
       <p>By: {post.authorUserName}</p>
+      {isAuthor && <button onClick={handleDelete}>Delete</button>}
     </div>
   );
 }
