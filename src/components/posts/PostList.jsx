@@ -3,7 +3,7 @@ import { Table } from "reactstrap";
 import { Link } from "react-router-dom";
 import { getAllPosts } from "../../managers/postManager";
 
-export default function PostList() {
+export default function PostList({ loggedInUser }) {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ export default function PostList() {
           <tr>
             <th>Title</th>
             <th>Category</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -29,6 +30,11 @@ export default function PostList() {
                 <Link to={`/posts/${post.id}`}>{post.title}</Link>
               </td>
               <td>{post.category}</td>
+              <td>
+                {loggedInUser?.id === post.userProfileId && (
+                  <Link to={`/posts/${post.id}/edit`}>Edit</Link>
+                )}
+              </td>
             </tr>
           ))}
         </tbody>

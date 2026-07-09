@@ -25,7 +25,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             index
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <PostList />
+                <PostList loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
@@ -45,7 +45,15 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <PostDetails  loggedInUser={loggedInUser} />
+                <PostDetails />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path=":id/edit"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <PostEdit />
               </AuthorizedRoute>
             }
           />
