@@ -7,6 +7,7 @@ import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import PostList from "./posts/PostList";
 import PostDetails from "./posts/PostDetails";
 import MyPostList from "./posts/MyPostList";
+import { CreatePost } from "./posts/CreatePost";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -30,16 +31,38 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             }
           />
           <Route path="/posts">
-          <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}><PostList /></AuthorizedRoute>} />
-          <Route
-            path="mine"
-            element={
-              <AuthorizedRoute loggedInUser={loggedInUser}>
-                <MyPostList />
-              </AuthorizedRoute>
-            }
-          />
-          <Route path=":id" element={<AuthorizedRoute loggedInUser={loggedInUser}><PostDetails loggedInUser={loggedInUser} /></AuthorizedRoute>} />
+            <Route
+              index
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <PostList />
+                </AuthorizedRoute>
+              }
+            />
+            <Route
+              path="mine"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <MyPostList />
+                </AuthorizedRoute>
+              }
+            />
+            <Route
+              path=":id"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <PostDetails loggedInUser={loggedInUser} />
+                </AuthorizedRoute>
+              }
+            />
+            <Route
+              path="create"
+              element={
+                <AuthorizedRoute loggedInUser={loggedInUser}>
+                  <CreatePost />
+                </AuthorizedRoute>
+              }
+            />
           </Route>
           <Route
             path=":id"
