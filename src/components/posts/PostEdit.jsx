@@ -24,26 +24,26 @@ export default function PostEdit() {
   }, [id]);
 
   const handleSubmit = (e) => {
-  e.preventDefault();
+    e.preventDefault();
 
-  const updatedPost = {
-    id: parseInt(id),
-    title,
-    content,
-    category,
-    imageLocation: imageLocation || null,
-    publicationDate: publicationDate || null,
+    const updatedPost = {
+      id: parseInt(id),
+      title,
+      content,
+      category,
+      imageLocation: imageLocation || null,
+      publicationDate: publicationDate || null,
+    };
+
+    updatePost(updatedPost).then((res) => {
+      if (res.status === 403) {
+        alert("You do not have permission to edit this post.");
+        navigate("/posts");
+      } else {
+        navigate(`/posts/${id}`);
+      }
+    });
   };
-
-  updatePost(updatedPost).then((res) => {
-    if (res.status === 403) {
-      alert("You do not have permission to edit this post.");
-      navigate("/posts");
-    } else {
-      navigate(`/posts/${id}`);
-    }
-  });
-};
 
   const handleCancel = () => {
     navigate("/posts");

@@ -19,7 +19,7 @@ export const getPostsByUser = (userProfileId) => {
 };
 
 export const updatePost = (post) => {
-  return fetch (`${_apiUrl}/${post.id}`, {
+  return fetch(`${_apiUrl}/${post.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
