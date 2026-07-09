@@ -7,6 +7,7 @@ export const getAllPosts = () => {
 export const getPostById = (id) => {
   return fetch(`${_apiUrl}/${id}`).then((res) => res.json());
 };
+
 export const deletePost = (id) => {
   return fetch(`${_apiUrl}/${id}`, {
     method: "DELETE",
