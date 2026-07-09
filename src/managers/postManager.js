@@ -16,3 +16,7 @@ export const deletePost = (id) => {
 export const getPostsByUser = (userProfileId) => {
   return fetch(`${_apiUrl}/byuser/${userProfileId}`).then((res) => res.json());
 };
+
+export const getMyPosts = () => {
+  return fetch(`${_apiUrl}/myposts`).then((res) => res.json());
+};
