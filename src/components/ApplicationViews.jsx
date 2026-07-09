@@ -8,6 +8,7 @@ import PostList from "./posts/PostList";
 import PostDetails from "./posts/PostDetails";
 import MyPostList from "./posts/MyPostList";
 import { CreatePost } from "./posts/CreatePost";
+import PostEdit from "./posts/PostEdit";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -59,7 +60,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               path="create"
               element={
                 <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <CreatePost />
+                  <CreatePost loggedInUser={loggedInUser} />
                 </AuthorizedRoute>
               }
             />
@@ -68,7 +69,7 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             path=":id"
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
-                <PostDetails />
+                <PostDetails loggedInUser={loggedInUser} />
               </AuthorizedRoute>
             }
           />
