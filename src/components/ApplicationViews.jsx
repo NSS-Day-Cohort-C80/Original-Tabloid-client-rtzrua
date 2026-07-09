@@ -6,7 +6,7 @@ import UserProfileList from "./userprofiles/UserProfilesList";
 import UserProfileDetails from "./userprofiles/UserProfileDetails";
 import PostList from "./posts/PostList";
 import PostDetails from "./posts/PostDetails";
-import PostEdit from "./posts/PostEdit";
+import MyPostList from "./posts/MyPostList";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -29,6 +29,18 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
+          <Route path="/posts">
+          <Route index element={<AuthorizedRoute loggedInUser={loggedInUser}><PostList /></AuthorizedRoute>} />
+          <Route
+            path="mine"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <MyPostList />
+              </AuthorizedRoute>
+            }
+          />
+          <Route path=":id" element={<AuthorizedRoute loggedInUser={loggedInUser}><PostDetails loggedInUser={loggedInUser} /></AuthorizedRoute>} />
+          </Route>
           <Route
             path=":id"
             element={
