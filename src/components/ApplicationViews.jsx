@@ -11,6 +11,7 @@ import { CreatePost } from "./posts/CreatePost";
 import PostEdit from "./posts/PostEdit";
 import PendingPostsList from "./posts/PendingPostsList";
 import CategoryList from "./categories/CategoryList";
+import CommentsList from "./posts/CommentsList";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -33,40 +34,30 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
               </AuthorizedRoute>
             }
           />
-          <Route path="/posts">
-            <Route
-              index
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <PostList />
-                </AuthorizedRoute>
-              }
-            />
-            <Route
-              path="mine"
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <MyPostList />
-                </AuthorizedRoute>
-              }
-            />
-            <Route
-              path=":id"
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <PostDetails loggedInUser={loggedInUser} />
-                </AuthorizedRoute>
-              }
-            />
-            <Route
-              path="create"
-              element={
-                <AuthorizedRoute loggedInUser={loggedInUser}>
-                  <CreatePost loggedInUser={loggedInUser} />
-                </AuthorizedRoute>
-              }
-            />
-          </Route>
+          <Route
+            path="mine"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <MyPostList />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="create"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CreatePost loggedInUser={loggedInUser} />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path="pending"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <PendingPostsList />
+              </AuthorizedRoute>
+            }
+          />
           <Route
             path=":id"
             element={
@@ -80,6 +71,14 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser}>
                 <PostEdit />
+              </AuthorizedRoute>
+            }
+          />
+          <Route
+            path=":id/comments"
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser}>
+                <CommentsList />
               </AuthorizedRoute>
             }
           />
@@ -122,17 +121,6 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         />
       </Route>
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
-      <Route path="/posts">
-        {/* existing routes... */}
-        <Route
-          path="pending"
-          element={
-            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
-              <PendingPostsList />
-            </AuthorizedRoute>
-          }
-        />
-      </Route>
     </Routes>
   );
 }
