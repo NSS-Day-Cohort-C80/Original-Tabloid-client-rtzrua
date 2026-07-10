@@ -10,6 +10,7 @@ import MyPostList from "./posts/MyPostList";
 import { CreatePost } from "./posts/CreatePost";
 import PostEdit from "./posts/PostEdit";
 import PendingPostsList from "./posts/PendingPostsList";
+import CategoryList from "./categories/CategoryList";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -97,6 +98,16 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
             element={
               <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
                 <UserProfileDetails />
+              </AuthorizedRoute>
+            }
+          />
+        </Route>
+        <Route path="/categories">
+          <Route
+            index
+            element={
+              <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+                <CategoryList />
               </AuthorizedRoute>
             }
           />
