@@ -1,17 +1,39 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getPostById, deletePost } from "../../managers/postManager";
+import { addReaction, getReactionCounts } from "../../managers/reactionManager";
+
+const REACTION_OPTIONS = ["👍", "😂", "😍", "😮", "😢"];
 
 export default function PostDetails({ loggedInUser }) {
   const { id } = useParams();
   const [post, setPost] = useState();
+  const [reactionCounts, setReactionCounts] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     getPostById(id).then((postFromApi) => {
       setPost(postFromApi);
     });
+    loadReactionCounts();
   }, [id]);
+
+  const loadReactionCounts = () => {
+    getReactionCounts(id).then((counts) => {
+      setReactionCounts(counts);
+    });
+  };
+
+  const handleReactionClick = (emoji) => {
+    addReaction(emoji, parseInt(id)).then(() => {
+      loadReactionCounts();
+    });
+  };
+
+  const getCountForEmoji = (emoji) => {
+    const match = reactionCounts.find((c) => c.emoji === emoji);
+    return match ? match.count : 0;
+  };
 
   if (!post) {
     return <p>Loading...</p>;
@@ -43,6 +65,18 @@ export default function PostDetails({ loggedInUser }) {
       <p>Published: {formattedDate}</p>
       <p>By: {post.authorUserName}</p>
       {isAuthor && <button onClick={handleDelete}>Delete</button>}
+
+      <div style={{ marginTop: "1rem" }}>
+        {REACTION_OPTIONS.map((emoji) => (
+          <button
+            key={emoji}
+            onClick={() => handleReactionClick(emoji)}
+            style={{ fontSize: "1.5rem", marginRight: "0.5rem" }}
+          >
+            {emoji} {getCountForEmoji(emoji)}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }
