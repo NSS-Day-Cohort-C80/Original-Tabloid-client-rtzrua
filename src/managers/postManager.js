@@ -41,3 +41,13 @@ export const createPost = (post) => {
     body: JSON.stringify(post),
   }).then((res) => res.json());
 };
+
+export const getPendingPosts = () => {
+  return fetch(`${_apiUrl}/pending`).then((res) => res.json());
+};
+
+export const approvePost = (id) => {
+  return fetch(`${_apiUrl}/approve/${id}`, {
+    method: "PUT",
+  });
+};
