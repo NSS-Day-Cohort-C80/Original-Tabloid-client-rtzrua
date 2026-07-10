@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { getPostById, deletePost } from "../../managers/postManager";
 import { addReaction, getReactionCounts } from "../../managers/reactionManager";
 
@@ -76,6 +76,11 @@ export default function PostDetails({ loggedInUser }) {
             {emoji} {getCountForEmoji(emoji)}
           </button>
         ))}
+        <div style={{ marginTop: "1rem" }}>
+          <Link to={`/posts/${id}/comments`}>
+            <button>View Comments</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
