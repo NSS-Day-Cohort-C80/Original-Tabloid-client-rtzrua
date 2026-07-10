@@ -9,6 +9,7 @@ import PostDetails from "./posts/PostDetails";
 import MyPostList from "./posts/MyPostList";
 import { CreatePost } from "./posts/CreatePost";
 import PostEdit from "./posts/PostEdit";
+import PendingPostsList from "./posts/PendingPostsList";
 
 export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
   return (
@@ -110,6 +111,17 @@ export default function ApplicationViews({ loggedInUser, setLoggedInUser }) {
         />
       </Route>
       <Route path="*" element={<p>Whoops, nothing here...</p>} />
+      <Route path="/posts">
+        {/* existing routes... */}
+        <Route
+          path="pending"
+          element={
+            <AuthorizedRoute loggedInUser={loggedInUser} roles={["Admin"]}>
+              <PendingPostsList />
+            </AuthorizedRoute>
+          }
+        />
+      </Route>
     </Routes>
   );
 }
